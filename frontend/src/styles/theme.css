@@ -1,0 +1,35 @@
+/* Light */
+:root {
+  --bg: 0 0% 100%;
+  --card: 0 0% 100%;
+  --border: 220 13% 91%;
+  --muted: 220 14% 96%;
+  --text: 222 47% 11%;
+  --subtle: 215 16% 47%;
+
+  /* Brand (Volt vibe: indigo/blue) */
+  --brand: 226 70% 55%;
+  --brand-foreground: 0 0% 100%;
+  --brand-ring: 226 70% 55%;
+}
+
+/* Dark */
+.dark {
+  --bg: 222 47% 5%;
+  --card: 222 47% 7%;
+  --border: 217 19% 24%;
+  --muted: 217 19% 14%;
+  --text: 0 0% 98%;
+  --subtle: 215 20% 65%;
+
+  --brand: 226 70% 60%;
+  --brand-foreground: 0 0% 100%;
+  --brand-ring: 226 70% 60%;
+}
+
+/* Global background/text */
+html, body, #root {
+  height: 100%;
+  background: hsl(var(--bg));
+  color: hsl(var(--text));
+}

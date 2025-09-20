@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Base layer ---- */
+@layer base {
+  /* Default border color */
+  *, *::before, *::after {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    @apply bg-base-bg text-base-text antialiased;
+  }
+
+  a {
+    @apply text-brand hover:opacity-90;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand/40 ring-offset-2 ring-offset-base-bg;
+  }
+}
+
+/* ---- Components layer ---- */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium
+           bg-brand text-brand-fg hover:opacity-95 transition shadow;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium
+           border text-base-text bg-transparent hover:bg-base-muted transition;
+    /* 👆 use `border` (default border) instead of `border-base-border` in @apply */
+  }
+
+  .card {
+    @apply bg-base-card rounded-2xl shadow-card border;
+    /* 👆 same: just `border` here */
+  }
+
+  .page {
+    @apply container mx-auto py-6;
+  }
+
+  .page-title {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+
+  .page-subtitle {
+    @apply text-sm text-base-subtle;
+  }
+
+  .field {
+    @apply block w-full rounded-xl border focus:border-brand focus:ring-brand;
+    /* 👆 use `border` (default border), not `border-base-border` */
+  }
+
+.section { @apply space-y-4; }
+.label { @apply text-sm font-medium; }
+.hint { @apply text-sm text-base-subtle; }
+.grid-2 { @apply grid grid-cols-1 gap-4 md:grid-cols-2; }
+.grid-3 { @apply grid grid-cols-1 gap-4 md:grid-cols-3; }
+
+}
