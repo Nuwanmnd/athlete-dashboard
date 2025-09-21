@@ -1,21 +1,20 @@
-// vite.config.ts (or .js)
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+// frontend/vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: { '@': path.resolve(__dirname, './src') }
-  },
   server: {
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8000',
+      "/api": {
+        target: "http://127.0.0.1:8000",
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/api/, ''), // strips /api before hitting FastAPI
       },
     },
   },
-  build: { outDir: 'dist' }
-})
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
+  },
+});

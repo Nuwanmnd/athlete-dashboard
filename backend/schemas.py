@@ -1,8 +1,37 @@
 # backend/schemas.py
 import datetime as dt
 from typing import Optional, List
-from pydantic import BaseModel, Field, field_validator, ConfigDict
+from pydantic import BaseModel, Field, field_validator, ConfigDict, EmailStr
 import json
+
+
+class UserOut(BaseModel):
+    id: int
+    email: EmailStr
+    full_name: Optional[str] = None
+    role: str
+    is_active: bool
+    class Config:
+        from_attributes = True
+
+class RegisterIn(BaseModel):
+    email: EmailStr
+    full_name: Optional[str] = None
+    password: str = Field(min_length=8)
+
+class LoginIn(BaseModel):
+    email: EmailStr
+    password: str
+
+class MeOut(UserOut): pass
+
+class ResetRequestIn(BaseModel):
+    email: EmailStr
+
+class ResetConfirmIn(BaseModel):
+    token: str
+    new_password: str = Field(min_length=8)
+
 
 # -------- Athletes --------
 class AthleteBase(BaseModel):

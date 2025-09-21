@@ -1,7 +1,7 @@
 # backend/models.py
-from sqlalchemy import Column, Integer, String, Float, Text, Boolean, Date, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Text, Boolean, Date, DateTime, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import datetime
+from datetime import datetime, timedelta
 from .database import Base
 from typing import Optional
 
@@ -162,3 +162,16 @@ class Note(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     athlete: Mapped["Athlete"] = relationship("Athlete", back_populates="notes")
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, nullable=False, unique=True, index=True)
+    full_name = Column(String, nullable=True)
+    password_hash = Column(String, nullable=False)
+    role = Column(String, default="owner")         # owner / coach etc.
+    is_active = Column(Boolean, default=True)
+    reset_token = Column(String, nullable=True)
+    reset_expires = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
