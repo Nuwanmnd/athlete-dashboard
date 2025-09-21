@@ -18,7 +18,6 @@ const navItems = [
     path: "/athletes/1/movement-assessment",
     icon: ClipboardPlus,
   },
-  { label: "Athlete Profile", path: "/athletes/1", icon: User },
   { label: "Injury Page", path: "/athletes/1/injury", icon: Activity },
   { label: "Athlete List", path: "/athletes-list", icon: List },
 ];
