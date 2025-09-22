@@ -4,9 +4,9 @@ import {
   LayoutDashboard,
   UserPlus,
   ClipboardPlus,
-  User,
   Activity,
   List,
+  LogOut,
 } from "lucide-react";
 
 const navItems = [
@@ -22,6 +22,19 @@ const navItems = [
   { label: "Athlete List", path: "/athletes-list", icon: List },
 ];
 
+async function handleLogout() {
+  try {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include", // send cookie
+    });
+  } catch (_) {
+    // ignore; we redirect regardless
+  } finally {
+    window.location.href = "/login";
+  }
+}
+
 function Sidebar() {
   return (
     <aside
@@ -29,6 +42,7 @@ function Sidebar() {
         fixed left-0 top-0 z-30 h-screen w-64
         border-r border-base-border bg-base-card
         text-base-text
+        flex flex-col
       "
     >
       {/* Brand */}
@@ -39,7 +53,7 @@ function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="p-3 space-y-1">
+      <nav className="p-3 space-y-1 flex-1 overflow-y-auto">
         {navItems.map(({ label, path, icon: Icon }) => (
           <NavLink
             key={path}
@@ -62,10 +76,25 @@ function Sidebar() {
           </NavLink>
         ))}
       </nav>
+
+      {/* Footer: Logout */}
+      <div className="p-3 border-t border-base-border">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="
+            w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm
+            text-base-subtle hover:text-base-text hover:bg-base-muted/40
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40
+            transition
+          "
+        >
+          <LogOut size={18} className="shrink-0 opacity-70" />
+          <span className="truncate">Logout</span>
+        </button>
+      </div>
     </aside>
   );
 }
-
-
 
 export default Sidebar;
