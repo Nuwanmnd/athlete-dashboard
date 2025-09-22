@@ -37,14 +37,18 @@ ENABLE_REGISTER = os.getenv("ENABLE_REGISTER", "0") == "1"
 # -----------------------------
 def send_reset_email(to_email: str, reset_url: str):
     """
-    Minimal SMTP sender. If SMTP env vars are missing, print link to console (dev mode).
-    Required envs for SMTP:
-      - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, (optional) SMTP_FROM
+    Works with:
+      - SMTP_PORT=465  -> implicit TLS (SMTP_SSL)
+      - SMTP_PORT=587 or 2525 -> STARTTLS (SMTP + starttls)
+    If SMTP_* env vars are missing, prints the link to the log.
     """
+    import os, smtplib
+    from email.mime.text import MIMEText
+
     host = os.getenv("SMTP_HOST")
     port = int(os.getenv("SMTP_PORT", "0") or 0)
     user = os.getenv("SMTP_USER")
-    pwd = os.getenv("SMTP_PASS")
+    pwd  = os.getenv("SMTP_PASS")
     sender = os.getenv("SMTP_FROM", user or "no-reply@example.com")
 
     body = f"Click to reset your password:\n\n{reset_url}\n\nThis link expires in 30 minutes."
@@ -57,9 +61,22 @@ def send_reset_email(to_email: str, reset_url: str):
         print(f"[DEV] Reset link for {to_email}: {reset_url}")
         return
 
-    with smtplib.SMTP_SSL(host, port) as server:
-        server.login(user, pwd)
-        server.sendmail(sender, [to_email], msg.as_string())
+    try:
+        if port == 465:
+            with smtplib.SMTP_SSL(host, port) as server:
+                server.login(user, pwd)
+                server.sendmail(sender, [to_email], msg.as_string())
+        else:
+            # 587 or 2525 -> STARTTLS
+            with smtplib.SMTP(host, port) as server:
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+                server.login(user, pwd)
+                server.sendmail(sender, [to_email], msg.as_string())
+        print(f"[MAIL] Reset email sent to {to_email}")
+    except Exception as e:
+        print(f"[MAIL][ERROR] {e}")
 
 
 # -----------------------------
