@@ -2,6 +2,29 @@
 
 TAG Dashboard is a full-stack web application designed to help coaches and practitioners **analyze athlete performance**, **track progress over time**, and **translate assessments into structured training insights**.
 
+## Screenshots
+
+### Dashboard Overview
+Centralized view of athletes, assessments, injuries, and recent activity.
+![Dashboard](screenshots/dashboard.png)
+
+### Add New Athlete
+Comprehensive athlete profile creation including background, medical history, and training goals.
+![Add Athlete](screenshots/add-athlete.png)
+
+### Performance Assessment & Metrics
+Assessment input with auto-calculated metrics, ratios, deficits, and recommendations.
+![Assessment Metrics](screenshots/assessment-metrics.png)
+
+### Movement Assessment
+Structured movement screening with live summaries, risk flags, and focus areas.
+![Movement Assessment](screenshots/movement-assessment.png)
+
+### Injury & Recovery Tracking
+Log injuries, monitor recovery status, and maintain longitudinal injury history.
+![Injury Tracking](screenshots/injury-tracking.png)
+
+
 The system provides a centralized, practical dashboard for managing athletes, recording assessments, visualizing progress, and maintaining long-term performance records.
 
 ---
